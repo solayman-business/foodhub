@@ -1,8 +1,78 @@
-<html>
-  <head>
-    <title>hello world</title>
-  </head>
-  <body>
-    <h1>Hello World</h1>
-  </body>
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Info Form</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            margin: 8px 0;
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: darkblue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>অর্ডার ফর্ম</h2>
+
+    <form id="customerForm">
+        <input type="text" name="name" placeholder="নাম লিখুন" required>
+        <input type="tel" name="phone" placeholder="মোবাইল নাম্বার" required>
+        <textarea name="address" placeholder="ঠিকানা লিখুন" required></textarea>
+
+        <!-- Hidden Source Field -->
+        <input type="hidden" name="src" value="leaflet">
+
+        <button type="submit">সাবমিট করুন</button>
+    </form>
+
+    <script>
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyy8Y4hZVGrvXyQRyO35r-CRlGbUikIFtW8U-hIuacTbs_vhdGIJr9HRyrKVOY5WRyq/exec'; // তোমার Web App URL দাও
+
+        document.getElementById('customerForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const form = e.target;
+            console.log(form);
+
+            const data = {
+                name: form.name.value,
+                phone: form.phone.value,
+                address: form.address.value,
+                src: form.src.value
+            };
+
+
+            fetch(scriptURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then(() => {
+                    alert("✅ সাবমিট সফলভাবে সম্পন্ন হয়েছে!");
+                    form.reset();
+                })
+                .catch(err => alert("❌ সমস্যা হয়েছে: " + err.message));
+        });
+    </script>
+
+</body>
+
 </html>
