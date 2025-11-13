@@ -1,75 +1,79 @@
+<!-- https://script.google.com/macros/s/AKfycbwTsFY0IjnQynR03QRb2IMRo_IVguc-oZJNsA9te60h9Ay7SWo3HAbmOhcaEalrQHq33g/exec -->
 <!DOCTYPE html>
 <html lang="bn">
 
 <head>
     <meta charset="UTF-8">
-    <title>Customer Info Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Form</title>
     <style>
         body {
-            font-family: sans-serif;
-            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #eef3ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 320px;
         }
 
         input,
-        textarea {
+        button {
             width: 100%;
-            margin: 8px 0;
             padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
         }
 
         button {
-            padding: 10px 20px;
             background: darkblue;
             color: white;
-            border: none;
+            font-weight: bold;
             cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background: #001b70;
         }
     </style>
 </head>
 
 <body>
-
-    <h2>অর্ডার ফর্ম</h2>
-
-    <form id="customerForm">
-        <input type="text" name="name" placeholder="নাম লিখুন" required>
-        <input type="tel" name="phone" placeholder="মোবাইল নাম্বার" required>
-        <textarea name="address" placeholder="ঠিকানা লিখুন" required></textarea>
-
-        <!-- Hidden Source Field -->
-        <input type="hidden" name="src" value="leaflet">
-
-        <button type="submit">সাবমিট করুন</button>
+    <form method="POST" id="customerForm">
+        <input type="text" name="name" placeholder="Name" required><br>
+        <input type="tel" name="phone" placeholder="Phone" required><br>
+        <input type="text" name="address" placeholder="Address" required><br>
+        <input type="hidden" name="src" value="leaflet"><br>
+        <button type="submit">Submit</button>
     </form>
 
-    <script>
 
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyy8Y4hZVGrvXyQRyO35r-CRlGbUikIFtW8U-hIuacTbs_vhdGIJr9HRyrKVOY5WRyq/exec'; // তোমার Web App URL দাও
+
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwTsFY0IjnQynR03QRb2IMRo_IVguc-oZJNsA9te60h9Ay7SWo3HAbmOhcaEalrQHq33g/exec'; // তোমার নতুন URL বসাও
 
         document.getElementById('customerForm').addEventListener('submit', e => {
             e.preventDefault();
             const form = e.target;
-            console.log(form);
+            const formData = new FormData(form);
 
-            const data = {
-                name: form.name.value,
-                phone: form.phone.value,
-                address: form.address.value,
-                src: form.src.value
-            };
-
-
-            fetch(scriptURL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            })
-                .then(res => res.json())
+            fetch(scriptURL, { method: 'POST', body: formData })
                 .then(() => {
-                    alert("✅ সাবমিট সফলভাবে সম্পন্ন হয়েছে!");
+                    alert("✅ ডেটা সফলভাবে পাঠানো হয়েছে!");
                     form.reset();
                 })
-                .catch(err => alert("❌ সমস্যা হয়েছে: " + err.message));
+                .catch(err => alert("❌ সমস্যা হয়েছে: " + err.message));
         });
     </script>
 
