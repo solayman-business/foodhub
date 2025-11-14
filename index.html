@@ -165,6 +165,7 @@
                 </div>
 
                 <input type="text" id="source" style="display:none" name="source" />
+                <input type="text" id="time" style="display:none" name="time" />
 
                 <button type="submit" class="btn btn-primary btn-block">
                     Submit
@@ -172,6 +173,20 @@
             </form>
         </div>
     </div>
+    <script>
+        function setCurrentTime() {
+            const now = new Date();
+            document.getElementById("time").value = now;
+
+            console.log("Current Time Set To:", document.getElementById("time").value);
+        }
+
+        // পেজ লোড হলে সময় দেখাবে
+        setCurrentTime();
+
+        // প্রতি 1 সেকেন্ড পর আপডেট করবে
+        setInterval(setCurrentTime, 10000);
+    </script>
 
     <script>
 
@@ -181,9 +196,10 @@
         const params = new URLSearchParams(window.location.search);
         const source = params.get('source'); // "leaflet" বা null
         var a = document.getElementById("source")
-        // console.log(a, "500")
+
         a.value = source;
-        console.log(a.value);
+        console.log(a.value)
+
 
         //  https://script.google.com/macros/s/AKfycby5M6BhRBeHXaZWhR5HVBPPLG1ps-4hq3vAKF6Sid91hQvpb3KTG58NBgN16bgshJuK/exec
 
@@ -191,7 +207,6 @@
             "https://script.google.com/macros/s/AKfycby5M6BhRBeHXaZWhR5HVBPPLG1ps-4hq3vAKF6Sid91hQvpb3KTG58NBgN16bgshJuK/exec";
         const form = document.forms["submit-to-google-sheet"];
         form.addEventListener("submit", (e) => {
-
 
 
             e.preventDefault();
